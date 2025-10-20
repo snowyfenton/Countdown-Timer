@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Countdown Timer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Digital Counter Display -->
+        <div class="counter-display" id="counter">
+            <span id="minutes">00</span>:<span id="seconds">00</span>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-buttons">
+            <button class="btn btn-primary" id="startPauseBtn" disabled>Start</button>
+            <button class="btn btn-secondary" id="resetBtn">Reset</button>
+        </div>
+
+        <!-- Preset Buttons -->
+        <div class="preset-buttons">
+            <button class="btn btn-preset" data-minutes="5">5 min</button>
+            <button class="btn btn-preset" data-minutes="15">15 min</button>
+            <button class="btn btn-preset" data-minutes="25">25 min</button>
+            <button class="btn btn-preset" data-minutes="50">50 min</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

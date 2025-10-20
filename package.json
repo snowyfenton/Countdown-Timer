@@ -1,0 +1,17 @@
+{
+  "name": "countdown-timer",
+  "version": "1.0.0",
+  "description": "A sleek, dark mode countdown timer web application with preset time options and minimalist design aesthetic.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^38.3.0"
+  }
+}
