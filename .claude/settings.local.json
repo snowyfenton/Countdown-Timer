@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git init)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Countdown Timer app\n\n- Sleek dark mode countdown timer with emerald green accents\n- Preset buttons: 5, 15, 25, 50 minutes\n- Interactive scroll/swipe to set custom time (1-999 minutes)\n- Mouse wheel and touchscreen support\n- Dramatic 5-second flashing completion alert\n- Yellow pulsing warning in final 10 seconds\n- Electron desktop app with Raspberry Pi touchscreen optimization\n- Side-by-side display mode for dual-app setups\n- Comprehensive setup guide for Raspberry Pi\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(gh repo create \"Countdown-Timer\" --public --source=. --description \"A sleek countdown timer with touchscreen support, dramatic visual alerts, and Raspberry Pi optimization\" --push)"
     ],
     "deny": [],
     "ask": []
