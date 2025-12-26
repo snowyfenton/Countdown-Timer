@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Countdown Timer
+Comment=A sleek countdown timer with visual alerts and touchscreen support
+Exec=/opt/countdown-timer/countdown-timer %U
+Icon=countdown-timer
+Categories=Utility;Productivity;
+Terminal=false
+StartupWMClass=countdown-timer
+StartupNotify=true
+SingleMainWindow=true

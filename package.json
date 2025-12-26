@@ -1,17 +1,54 @@
 {
   "name": "countdown-timer",
   "version": "1.0.0",
-  "description": "A sleek, dark mode countdown timer web application with preset time options and minimalist design aesthetic.",
+  "description": "A sleek countdown timer application optimized for desktop and touchscreen displays.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "build": "electron-builder",
+    "build:linux": "electron-builder --linux",
+    "build:arm": "electron-builder --linux --arm64",
+    "build:armv7": "electron-builder --linux --armv7l",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "countdown",
+    "timer",
+    "pomodoro",
+    "electron",
+    "raspberry-pi"
+  ],
+  "author": "Your Name",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^38.3.0"
+    "electron": "^38.3.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.countdowntimer.app",
+    "productName": "Countdown Timer",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "category": "Utility",
+      "icon": "assets/icon.png"
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0"
+      ]
+    }
   }
 }

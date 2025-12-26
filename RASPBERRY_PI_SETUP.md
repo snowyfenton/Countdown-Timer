@@ -2,6 +2,47 @@
 
 This guide will help you set up the Countdown Timer alongside Todoist on your Raspberry Pi.
 
+## Quick Install via DEB Package (Recommended)
+
+The easiest way to install on your Raspberry Pi is using the pre-built DEB package:
+
+### For Pre-Built Releases
+If you have a pre-built `.deb` file:
+
+```bash
+# Install the DEB package
+sudo apt-get install -y ~/Downloads/countdown-timer_1.0.0_arm64.deb
+
+# The app will appear in your applications menu and can be launched from there
+```
+
+### Build Your Own DEB Package
+
+If you want to build the DEB package yourself on your development machine:
+
+```bash
+# Clone/navigate to the project directory
+cd ~/path/to/countdown-timer
+
+# Install dependencies
+npm install
+
+# Build for ARM64 (64-bit Raspberry Pi 3, 4, 5)
+npm run build:arm
+
+# Or for 32-bit systems (ARMv7)
+npm run build:armv7
+
+# The DEB file will be in the dist/ directory
+# Transfer to your Pi and install as above
+```
+
+### After Installation
+Once installed via DEB:
+- The app will appear in your applications menu (Applications > Utilities > Countdown Timer)
+- You can launch it from the menu or via command line: `countdown-timer`
+- It will auto-update when you upgrade the package
+
 ## Prerequisites
 
 1. Raspberry Pi (3 or newer recommended)
@@ -358,6 +399,50 @@ sudo raspi-config
 sudo raspi-config
 # Navigate to: Interface Options > VNC > Enable
 ```
+
+## Building & Distributing the DEB Package
+
+If you want to distribute the app to others or set it up as a proper Linux package:
+
+### Prerequisites for Building
+
+```bash
+# On your development machine (Linux, Mac, or Windows with WSL)
+npm install -g electron-builder
+
+# Or add to devDependencies
+npm install --save-dev electron-builder
+```
+
+### Build Process
+
+```bash
+# For 64-bit Raspberry Pi (Pi 3, 4, 5)
+npm run build:arm
+
+# For 32-bit Raspberry Pi systems
+npm run build:armv7
+
+# The build outputs will be in the dist/ directory
+ls -la dist/
+```
+
+### What's Inside the DEB Package
+
+The DEB package includes:
+- The Electron app binary
+- All dependencies bundled
+- Desktop entry file (registers in application menu)
+- Proper permissions and installation scripts
+- Automatic menu registration
+
+### Distributing Your Build
+
+Once built, you can:
+1. **Share the .deb file** - Others can install with `sudo apt install ./countdown-timer_1.0.0_arm64.deb`
+2. **Host on GitHub Releases** - Upload to a GitHub release for easy downloading
+3. **Create a PPA** - Advanced: host your own Ubuntu/Debian repository
+4. **Share via USB** - Copy the .deb file to a USB drive
 
 ## Notes
 
