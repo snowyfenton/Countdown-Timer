@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Countdown Timer & Todoist
+Comment=Auto-start Countdown Timer and Todoist side-by-side on boot
+Exec=/home/pi/Countdown Timer/start-apps.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false

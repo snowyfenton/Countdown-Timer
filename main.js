@@ -6,11 +6,10 @@ function createWindow() {
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
 
-  // Position window on right side (adjust x and width for left side positioning)
-  const windowWidth = 600;
+  // Position window on right side - 1/3 of screen width for timer
+  const windowWidth = Math.floor(screenWidth / 3); // 1/3 for timer
   const windowHeight = screenHeight;
   const xPosition = screenWidth - windowWidth; // Right side
-  // For left side, use: const xPosition = 0;
 
   const mainWindow = new BrowserWindow({
     width: windowWidth,

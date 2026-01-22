@@ -114,6 +114,7 @@ countdown-timer/
 ├── main.js                     # Electron entry point
 ├── package.json                # Node.js dependencies
 ├── start-apps.sh              # Raspberry Pi startup script
+├── autostart-countdown-todoist.desktop  # Autostart desktop file template
 ├── README.md                   # This file
 ├── RASPBERRY_PI_SETUP.md      # Raspberry Pi installation guide
 └── countdown-timer-prd.md     # Product requirements document
@@ -145,8 +146,8 @@ countdown-timer/
 The timer is fully optimized for Raspberry Pi with touchscreen displays:
 
 - **Touchscreen Support**: Official 7" display and most HDMI touchscreens
-- **Auto-start**: Configure to launch on boot
-- **Side-by-side Layout**: Run alongside Todoist or other apps
+- **Auto-start**: Configure to launch on boot (see setup guide)
+- **Side-by-side Layout**: Run alongside Todoist or other apps (2/3 and 1/3 split)
 - **Performance Optimized**: Hardware acceleration enabled
 
 See [RASPBERRY_PI_SETUP.md](RASPBERRY_PI_SETUP.md) for complete setup instructions.

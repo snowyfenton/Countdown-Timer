@@ -183,11 +183,27 @@ nano ~/Countdown\ Timer/start-apps.sh
    npm start &
    ```
 
-## Auto-start on Boot (Optional)
+## Auto-start on Boot
 
 To automatically launch both apps when your Pi boots:
 
 ### Method 1: Using Autostart (Recommended)
+
+**Quick Setup:**
+
+```bash
+# Create autostart directory if it doesn't exist
+mkdir -p ~/.config/autostart
+
+# Copy the autostart desktop file (adjust path if your project is in a different location)
+cp ~/Countdown\ Timer/autostart-countdown-todoist.desktop ~/.config/autostart/
+
+# Make sure the path in the desktop file matches your actual project location
+# Edit if needed:
+nano ~/.config/autostart/autostart-countdown-todoist.desktop
+```
+
+**Manual Setup (Alternative):**
 
 ```bash
 # Create autostart directory if it doesn't exist
@@ -197,11 +213,17 @@ mkdir -p ~/.config/autostart
 cat > ~/.config/autostart/countdown-todoist.desktop << 'EOF'
 [Desktop Entry]
 Type=Application
-Name=Countdown & Todoist
+Name=Countdown Timer & Todoist
+Comment=Auto-start Countdown Timer and Todoist side-by-side on boot
 Exec=/home/pi/Countdown Timer/start-apps.sh
 Terminal=false
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
 EOF
 ```
+
+**Note:** Make sure to update the `Exec` path in the desktop file to match your actual project directory location.
 
 ### Method 2: Using .bashrc (Alternative)
 
