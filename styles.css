@@ -28,16 +28,16 @@ body {
 
 /* Digital Counter Display */
 .counter-display {
-    font-size: clamp(4rem, 12vw, 8rem);
+    font-size: clamp(6rem, 18vw, 12rem);
     font-weight: 800;
     color: #10b981;
     text-align: center;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     user-select: none;
     transition: all 0.3s ease;
     font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     cursor: pointer;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 12px;
     position: relative;
 }
@@ -276,7 +276,7 @@ body.timer-completed {
     }
 
     .counter-display {
-        font-size: clamp(3rem, 15vw, 6rem);
+        font-size: clamp(4.5rem, 20vw, 9rem);
     }
 
     .control-buttons {
