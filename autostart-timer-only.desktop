@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Countdown Timer
+Comment=Auto-start Countdown Timer on boot
+Exec=/home/snowyfenton/Countdown-Timer/launch-timer.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
