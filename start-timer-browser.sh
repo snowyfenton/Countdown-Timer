@@ -7,12 +7,17 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Get screen dimensions for positioning
-# Default to 1280x720 if xrandr is not available
+# Default to 1280x720 if xrandr is not available or returns empty
 if command -v xrandr &> /dev/null; then
     SCREEN_WIDTH=$(xrandr | grep '*' | awk '{print $1}' | cut -d 'x' -f1 | head -1)
     SCREEN_HEIGHT=$(xrandr | grep '*' | awk '{print $1}' | cut -d 'x' -f2 | head -1)
-else
+fi
+
+# Fallback to default if detection failed or returned empty/zero
+if [ -z "$SCREEN_WIDTH" ] || [ "$SCREEN_WIDTH" -eq 0 ] 2>/dev/null; then
     SCREEN_WIDTH=1280
+fi
+if [ -z "$SCREEN_HEIGHT" ] || [ "$SCREEN_HEIGHT" -eq 0 ] 2>/dev/null; then
     SCREEN_HEIGHT=720
 fi
 
