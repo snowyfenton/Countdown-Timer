@@ -1,9 +1,11 @@
 [Desktop Entry]
+Version=1.0
 Type=Application
 Name=Countdown Timer
 Comment=Launch Countdown Timer in browser mode
 Exec=/home/snowyfenton/Countdown-Timer/start-timer-browser.sh
+Path=/home/snowyfenton/Countdown-Timer
 Icon=utilities-timer
 Terminal=false
 Categories=Utility;
-StartupNotify=true
+StartupNotify=false
