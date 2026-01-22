@@ -43,6 +43,156 @@ Once installed via DEB:
 - You can launch it from the menu or via command line: `countdown-timer`
 - It will auto-update when you upgrade the package
 
+## Alternative: Browser-Based Installation (For ARMHF/ARMv6 Raspberry Pi)
+
+**Important:** If you have an older Raspberry Pi (Pi Zero, Pi 1, early Pi 2) with ARMHF/ARMv6 architecture, the DEB packages won't work because Electron doesn't support ARMv6. Use this browser-based approach instead.
+
+### Check Your Architecture
+
+Before proceeding, determine your Raspberry Pi's architecture:
+
+```bash
+uname -m
+```
+
+**Architecture Guide:**
+- `armv6l` = ARMHF/ARMv6 → **Use browser method** (this section)
+- `armv7l` = ARMv7 → Can use DEB package OR browser method
+- `aarch64` = ARM64 → Can use DEB package OR browser method
+
+### Why Browser-Based?
+
+The countdown timer is a pure web application (HTML/CSS/JavaScript) and doesn't require Electron. Running it in Chromium browser:
+- ✅ Works on **all** Raspberry Pi models (ARMv6, ARMv7, ARM64)
+- ✅ **Lower memory usage** than Electron
+- ✅ **No build step** required
+- ✅ **Same functionality** as Electron version
+- ✅ Full touchscreen support
+
+### Installation Steps
+
+#### 1. Install Chromium Browser
+
+```bash
+sudo apt-get update
+sudo apt-get install -y chromium-browser
+```
+
+#### 2. Transfer Project Files
+
+Copy the project to your Raspberry Pi using one of these methods:
+
+**Option A: Using USB Drive**
+```bash
+# Copy files to USB, then on Pi:
+cp -r /media/pi/USB_NAME/Countdown\ Timer ~/
+```
+
+**Option B: Using SCP from your computer**
+```bash
+scp -r "c:\Users\snowy\Countdown Timer" pi@raspberrypi.local:~/
+```
+
+**Option C: Using Git**
+```bash
+cd ~
+git clone https://github.com/yourusername/Countdown-Timer.git
+cd Countdown-Timer
+```
+
+#### 3. Make Browser Launch Script Executable
+
+```bash
+cd ~/Countdown\ Timer
+chmod +x start-timer-browser.sh
+chmod +x start-apps.sh
+```
+
+#### 4. Test the Timer
+
+Launch just the timer to test:
+
+```bash
+./start-timer-browser.sh
+```
+
+The timer should appear on the right side of your screen (1/3 width) in app mode (no browser chrome).
+
+#### 5. Launch with Todoist (Optional)
+
+To run both Todoist and the timer side-by-side:
+
+```bash
+./start-apps.sh
+```
+
+This will automatically use the browser version if Electron is not available.
+
+### Auto-start Browser Version on Boot
+
+To automatically launch both apps when your Pi boots:
+
+**Quick Setup:**
+
+```bash
+# Create autostart directory if it doesn't exist
+mkdir -p ~/.config/autostart
+
+# Copy the autostart desktop file
+cp ~/Countdown\ Timer/autostart-countdown-todoist.desktop ~/.config/autostart/
+
+# Make sure the path in the desktop file matches your project location
+nano ~/.config/autostart/autostart-countdown-todoist.desktop
+```
+
+The `start-apps.sh` script will automatically detect whether to use Electron or browser mode.
+
+**Manual Setup (Alternative):**
+
+```bash
+mkdir -p ~/.config/autostart
+
+cat > ~/.config/autostart/countdown-todoist.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=Countdown Timer & Todoist
+Comment=Auto-start Countdown Timer and Todoist side-by-side on boot
+Exec=/home/pi/Countdown Timer/start-apps.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+EOF
+```
+
+**Note:** Update the `Exec` path if your project is in a different location.
+
+### Troubleshooting Browser Mode
+
+**Timer window not positioned correctly:**
+```bash
+# Check screen resolution
+xrandr | grep '*'
+
+# The start-timer-browser.sh script auto-detects resolution
+# Edit the script if needed for manual positioning
+nano ~/Countdown\ Timer/start-timer-browser.sh
+```
+
+**Chromium not found:**
+```bash
+# Try alternative browser commands
+which chromium-browser
+which chromium
+
+# If using a different browser, edit start-timer-browser.sh
+# Replace chromium-browser with firefox or your browser
+```
+
+**Touch not working:**
+- Touch events work the same in browser mode as Electron
+- See the main touchscreen troubleshooting section below
+
 ## Prerequisites
 
 1. Raspberry Pi (3 or newer recommended)

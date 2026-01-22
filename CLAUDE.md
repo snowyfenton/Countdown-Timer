@@ -4,7 +4,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A minimalist countdown timer Electron desktop application optimized for touchscreen displays and Raspberry Pi. Features interactive time setting via scroll/swipe gestures, preset timers, and dramatic visual alerts. Designed to run side-by-side with other applications (e.g., Todoist) on dual-app displays.
+A minimalist countdown timer application optimized for touchscreen displays and Raspberry Pi. Features interactive time setting via scroll/swipe gestures, preset timers, and dramatic visual alerts. Designed to run side-by-side with other applications (e.g., Todoist) on dual-app displays.
+
+**Key Architecture Note:** This is a pure web application (HTML/CSS/JavaScript) that can run either as an Electron desktop app OR directly in a browser. No Node.js APIs are used at runtime, making it fully browser-compatible.
+
+## Deployment Options
+
+### Option 1: Electron Desktop App
+- Full desktop integration with native window management
+- **Requires ARMv7+ architecture** (not ARMHF/ARMv6)
+- Build via electron-builder to produce DEB packages
+- Supports: x64, ARM64 (64-bit Pi 3+), ARMv7 (32-bit Pi 3)
+
+### Option 2: Browser-Based (ARMHF Compatible)
+- Direct launch in Chromium with `--app` flag for app-like experience
+- **Works on all Raspberry Pi models** including ARMv6/ARMHF (Pi Zero, Pi 1, early Pi 2)
+- No build step required - just copy files
+- Lower memory footprint than Electron
+- Launcher script: [start-timer-browser.sh](start-timer-browser.sh)
+- Auto-detection in [start-apps.sh](start-apps.sh) - tries Electron first, falls back to browser
+
+**When to use browser mode:**
+- Older Raspberry Pi models (ARMHF/ARMv6 architecture)
+- Systems without Node.js/npm installed
+- Lower resource environments
+- Faster deployment without build step
 
 ## Development Commands
 
@@ -23,13 +47,28 @@ npm run build:armv7     # Build DEB package for ARMv7 (32-bit Raspberry Pi)
 
 Built packages are output to the `dist/` directory.
 
+**Note:** DEB packages do NOT support ARMHF/ARMv6. For these systems, use browser-based deployment.
+
+### Browser-Based Deployment (No Build)
+```bash
+# Launch in browser (works on all architectures)
+./start-timer-browser.sh
+
+# Or manually with Chromium
+chromium-browser --app=file:///path/to/index.html \
+  --window-position=X,0 \
+  --window-size=WIDTH,HEIGHT \
+  --user-data-dir="$HOME/.config/countdown-timer"
+```
+
 ## Architecture
 
 ### Application Structure
-This is a pure JavaScript Electron application with no frameworks:
-- **Electron app** ([main.js](main.js)) - Entry point, window management, positioned on right side of screen (600px wide)
-- **Web interface** ([index.html](index.html), [styles.css](styles.css), [script.js](script.js)) - Timer UI and logic
+This is a pure web application with optional Electron wrapper:
+- **Electron app** ([main.js](main.js)) - Optional wrapper for desktop integration, window management (1/3 screen width on right)
+- **Web interface** ([index.html](index.html), [styles.css](styles.css), [script.js](script.js)) - Core timer UI and logic (browser-compatible)
 - **Class-based state management** - Single `CountdownTimer` class handles all timer logic
+- **Browser launchers** ([start-timer-browser.sh](start-timer-browser.sh), [start-apps.sh](start-apps.sh)) - Alternative to Electron for ARMHF/ARMv6 systems
 
 ### Timer State Machine
 The timer operates in 5 distinct states ([script.js:16](script.js#L16)):
@@ -109,19 +148,44 @@ Critical to remove CSS classes after animations:
 
 ## Raspberry Pi Specific
 
-### DEB Package
+### Architecture Support Matrix
+
+| Architecture | Model Examples | Electron DEB | Browser Mode |
+|--------------|----------------|--------------|--------------|
+| ARMv6 (ARMHF) | Pi Zero, Pi 1, early Pi 2 | ❌ Not supported | ✅ Works |
+| ARMv7 | Pi 2, Pi 3 (32-bit OS) | ✅ `build:armv7` | ✅ Works |
+| ARM64 | Pi 3+, Pi 4, Pi 5 (64-bit OS) | ✅ `build:arm` | ✅ Works |
+
+**Important:** For ARMHF/ARMv6 systems, browser mode is the ONLY option. Electron doesn't support ARMv6.
+
+### DEB Package (ARMv7+ only)
 The Electron Builder configuration ([package.json:28-53](package.json#L28-L53)) creates installable DEB packages with:
 - System dependencies declared (GTK3, NSS3, etc.)
 - Desktop entry for application menu
 - Icon and category metadata
+- **Does NOT support ARMHF/ARMv6**
+
+### Browser-Based Deployment (All architectures)
+The [start-timer-browser.sh](start-timer-browser.sh) script:
+- Auto-detects screen resolution via `xrandr`
+- Calculates 1/3 screen width for timer window
+- Launches Chromium in `--app` mode (no browser chrome)
+- Uses isolated user data directory
+- **Works on ANY Raspberry Pi model**
 
 ### Side-by-Side Layout
-Designed to work with [start-apps.sh](start-apps.sh) which launches:
-1. Browser app (Todoist) on left side
-2. Timer on right side
-3. Unclutter to hide mouse cursor
+[start-apps.sh](start-apps.sh) intelligently launches both apps:
+1. Todoist in Chromium (left 2/3 of screen)
+2. Timer (right 1/3 of screen) - auto-detects Electron vs browser mode:
+   - If `npm` and `electron` available → Electron version
+   - Otherwise → Browser version via [start-timer-browser.sh](start-timer-browser.sh)
+3. Optional: Unclutter to hide mouse cursor
 
-See [RASPBERRY_PI_SETUP.md](RASPBERRY_PI_SETUP.md) for complete deployment instructions including touchscreen calibration and auto-start configuration.
+See [RASPBERRY_PI_SETUP.md](RASPBERRY_PI_SETUP.md) for complete deployment instructions including:
+- ARMHF/ARMv6 browser-based installation
+- Architecture detection (`uname -m`)
+- Touchscreen calibration
+- Auto-start configuration
 
 ## Common Modifications
 

@@ -42,8 +42,28 @@ npm install
 npm start
 ```
 
+### Browser Version (All Platforms, No Build Required)
+For older Raspberry Pi models (ARMHF/ARMv6) or any system without Electron support:
+
+```bash
+# Open directly in browser (cross-platform)
+chromium-browser --app=file:///path/to/index.html
+
+# Or use the included launcher script (Linux/Raspberry Pi)
+chmod +x start-timer-browser.sh
+./start-timer-browser.sh
+```
+
+**Advantages:**
+- Works on **all** Raspberry Pi models including ARMv6 (Pi Zero, Pi 1)
+- Lower memory footprint than Electron
+- No build step or compilation required
+- Same functionality and touchscreen support
+
 ### Raspberry Pi Setup
 See [RASPBERRY_PI_SETUP.md](RASPBERRY_PI_SETUP.md) for detailed installation and touchscreen configuration.
+
+**Note:** ARMHF/ARMv6 users (Pi Zero, Pi 1, early Pi 2) should use the browser-based installation method described in the setup guide.
 
 ## Usage
 
@@ -93,7 +113,7 @@ See [RASPBERRY_PI_SETUP.md](RASPBERRY_PI_SETUP.md) for detailed installation and
 ### Technology Stack
 - Pure HTML, CSS, and JavaScript (no frameworks)
 - ES6+ JavaScript with class-based architecture
-- Electron for desktop app packaging
+- Electron for desktop app packaging (optional - can also run in browser)
 - CSS Grid and Flexbox for responsive layout
 - CSS animations for visual alerts
 
@@ -113,7 +133,8 @@ countdown-timer/
 ├── script.js                   # Timer logic and state management
 ├── main.js                     # Electron entry point
 ├── package.json                # Node.js dependencies
-├── start-apps.sh              # Raspberry Pi startup script
+├── start-apps.sh              # Raspberry Pi startup script (auto-detects Electron/browser)
+├── start-timer-browser.sh     # Browser-based launcher (ARMHF compatible)
 ├── autostart-countdown-todoist.desktop  # Autostart desktop file template
 ├── README.md                   # This file
 ├── RASPBERRY_PI_SETUP.md      # Raspberry Pi installation guide
