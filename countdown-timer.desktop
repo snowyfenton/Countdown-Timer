@@ -2,7 +2,7 @@
 Type=Application
 Name=Countdown Timer
 Comment=Launch Countdown Timer in browser mode
-Exec=/home/pi/Countdown Timer/start-timer-browser.sh
+Exec=/home/snowyfenton/Countdown-Timer/start-timer-browser.sh
 Icon=utilities-timer
 Terminal=false
 Categories=Utility;
