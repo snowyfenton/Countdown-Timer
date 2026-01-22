@@ -28,7 +28,7 @@ echo "Timer window: ${TIMER_WIDTH}x${SCREEN_HEIGHT} at position ${X_POSITION},0"
 # --app flag removes browser chrome (address bar, tabs, bookmarks bar)
 # --window-position and --window-size for precise placement
 # --user-data-dir isolates timer's browser data from main browser profile
-chromium-browser --app="file://$DIR/index.html" \
+chromium --app="file://$DIR/index.html" \
   --window-position="$X_POSITION,0" \
   --window-size="$TIMER_WIDTH,$SCREEN_HEIGHT" \
   --user-data-dir="$HOME/.config/countdown-timer" \

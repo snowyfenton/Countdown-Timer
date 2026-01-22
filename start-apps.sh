@@ -9,7 +9,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Start Todoist in Chromium (left side, 2/3 of screen width)
 # For 1280x720: 853px width (2/3 of 1280)
-chromium-browser --app=https://todoist.com --window-size=853,720 --window-position=0,0 &
+chromium --app=https://todoist.com --window-size=853,720 --window-position=0,0 &
 
 # Wait for Todoist to start
 sleep 3
